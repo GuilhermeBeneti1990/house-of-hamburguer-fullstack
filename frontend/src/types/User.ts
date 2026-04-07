@@ -3,6 +3,7 @@ export interface IUser {
   name: string;
   email: string;
   cep: string;
+  admin: boolean;
 }
 
 export interface IUserContext {

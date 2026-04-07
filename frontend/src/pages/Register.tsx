@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import { Link } from "react-router";
 
 const Register = () => {
+  const BASE_URL = "http://localhost:3000";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +24,7 @@ const Register = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/register", {
+      const response = await fetch(`${BASE_URL}/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

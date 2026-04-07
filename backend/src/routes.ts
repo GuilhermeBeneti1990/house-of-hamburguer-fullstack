@@ -1,6 +1,7 @@
 import { type Request, type Response } from "express";
 import { Router } from "express";
 import { auth, login, logout, register } from "./controller/userController";
+import { authMiddleware } from "./middlewares/auth";
 
 export const router = Router();
 
@@ -14,5 +15,5 @@ router.get("/healthcheck", (req: Request, res: Response) => {
 // Users Routes
 router.post("/login", login);
 router.post("/register", register);
-router.get("/me", auth);
-router.post("/logout", logout);
+router.get("/me", authMiddleware, auth);
+router.post("/logout", authMiddleware, logout);

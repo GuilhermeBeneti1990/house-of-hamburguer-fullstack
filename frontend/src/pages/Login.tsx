@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router";
 import { UserContext } from "../contexts/UserContext";
 
 const Login = () => {
+  const BASE_URL = "http://localhost:3000";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,7 +20,7 @@ const Login = () => {
         setError("E-mail e senha são obrigatórios!");
         return;
       }
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
