@@ -1,8 +1,9 @@
 import { createBrowserRouter, Outlet } from "react-router";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Header from "./layouts/Header";
+import Order from "./pages/Order";
 
 const Layout = () => {
   return (
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/pedidos",
+        element: <Order />,
       },
     ],
   },

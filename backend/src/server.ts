@@ -1,97 +1,20 @@
 import express, { type Request, type Response } from "express";
-import { connection, prisma } from "./db";
+import { connection } from "./db";
 import cors from "cors";
+import { router } from "./routes";
+import cookieParser from "cookie-parser";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
-
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
+app.use(router);
 connection();
-
-app.get("/healthcheck", (req, res) => {
-  console.log("API is running!");
-  res.status(200).json({
-    message: "API is running",
-  });
-});
-
-app.post("/login", async (req: Request, res: Response) => {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      res.status(400).json({
-        message: "E-mail e senha são obrigatórios!",
-      });
-      return;
-    }
-
-    const user = await prisma.user.findFirst({
-      where: {
-        email,
-        password,
-      },
-    });
-
-    if (!user) {
-      res.status(404).json({
-        message: "Usuário não encontrado!",
-      });
-      return;
-    }
-
-    res.status(200).json(user);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "Erro interno do servidor!",
-    });
-    return;
-  }
-});
-
-app.post("/register", async (req: Request, res: Response) => {
-  try {
-    const { name, email, password, cep } = req.body;
-
-    if(!name || !email || !password || !cep) {
-      res.status(400).json({
-        message: "Todas as informações são obrigatórias!"
-      });
-      return;
-    }
-
-    const user = await prisma.user.findFirst({
-      where: {
-        email
-      }
-    });
-
-    if(user?.email) {
-      res.status(409).json({
-        message: "E-mail já cadastrado!"
-      });
-      return;
-    }
-
-    const newUser = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password,
-        cep
-      }
-    });
-
-    res.status(201).json(newUser);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "Erro interno no servidor!"
-    });
-    return;
-  }
-});
 
 app.listen(3000, () => {
   console.log("Server running in port 3000");

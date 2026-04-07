@@ -13,12 +13,12 @@ const Register = () => {
 
   async function onSubmit() {
     try {
-      if(!name || !email || !password || !cep) {
+      if (!name || !email || !password || !cep) {
         setError("Todas as informações são obrigatórias!");
         return;
       }
 
-      if(password !== confirmPassword) {
+      if (password !== confirmPassword) {
         setError("As senhas precisam ser iguais!");
         return;
       }
@@ -26,12 +26,12 @@ const Register = () => {
       const response = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({name, email, password, cep})
+        body: JSON.stringify({ name, email, password, cep }),
       });
 
-      switch(response.status) {
+      switch (response.status) {
         case 409:
           setError("E-mail já cadastrado!");
           break;
@@ -96,8 +96,8 @@ const Register = () => {
           onChange={(e) => setCep(e.target.value)}
           value={cep}
         />
-        <p className="text-red-500 font-bold text-sm">{error}</p>
-        <div className="w-full mt-3 flex flex-col gap-2">
+        <p className="text-sm font-bold text-red-500">{error}</p>
+        <div className="mt-3 flex w-full flex-col gap-2">
           <Button title="Registrar" onClick={onSubmit} />
           <Link to="/login" className="w-full">
             <Button title="Já tenho uma conta, fazer login" variant="outline" />
