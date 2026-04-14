@@ -1,12 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Product from "../components/Product";
+import type { IProduct } from "../types/Product";
 
 const Home = () => {
   const [category, setCategory] = useState("Hamburguer");
+  const [products, setProducts] = useState<IProduct[]>([]);
 
   const handleChangeCategory = (newCategory: string) => {
     setCategory(newCategory);
   };
+
+  const getProducts = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/products");
+
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  };
+
+  const filterProducts = products.filter((product) => {
+    return product.category === category;
+  });
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   const getCategoryClass = (categoryName: string) => {
     const elementSelected =
@@ -45,10 +67,18 @@ const Home = () => {
       </div>
       <p className="mt-2 mb-2 font-bold text-[#F2DAAC] uppercase">{category}</p>
       <div className="flex flex-col gap-1 md:gap-3">
-        <Product />
-        <Product />
-        <Product />
-        <Product />
+        {filterProducts.map((product) => (
+          <Product
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            description={product.description}
+            price={product.price}
+            img={product.img}
+            category={product.category}
+          />
+        ))}
+        {filterProducts.length === 0 && <p>Não há produtos desta categoria</p>}
       </div>
     </div>
   );
