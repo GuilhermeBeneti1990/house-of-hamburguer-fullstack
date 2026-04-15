@@ -2,7 +2,7 @@ import { type Request, type Response } from "express";
 import { Router } from "express";
 import { auth, login, logout, register } from "./controller/userController";
 import { authMiddleware } from "./middlewares/auth";
-import { getProducts } from "./controller/productController";
+import { deleteProduct, getProducts } from "./controller/productController";
 
 export const router = Router();
 
@@ -21,3 +21,4 @@ router.post("/logout", authMiddleware, logout);
 
 // Product Routes
 router.get("/products", getProducts);
+router.delete("/products/:id", authMiddleware, deleteProduct);

@@ -15,6 +15,7 @@ const Home = () => {
       const response = await fetch("http://localhost:3000/products");
 
       const data = await response.json();
+
       setProducts(data);
     } catch (error) {
       console.log(error);
@@ -76,9 +77,12 @@ const Home = () => {
             price={product.price}
             img={product.img}
             category={product.category}
+            setProducts={setProducts}
           />
         ))}
-        {filterProducts.length === 0 && <p>Não há produtos desta categoria</p>}
+        {filterProducts.length === 0 && (
+          <p className="text-[#F2DAAC]">Não há produtos desta categoria</p>
+        )}
       </div>
     </div>
   );
