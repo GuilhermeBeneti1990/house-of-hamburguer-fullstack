@@ -44,7 +44,7 @@ const Product = ({
         return;
       }
 
-      getProducts();
+      await getProducts();
     } catch (error) {
       console.log(error);
       return;
