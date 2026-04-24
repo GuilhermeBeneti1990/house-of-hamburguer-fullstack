@@ -3,11 +3,13 @@ import { UserContext } from "../contexts/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { Box, LayoutDashboard, LogOut, Plus, ShoppingCart } from "lucide-react";
 import Cart from "../components/Cart";
+import { CartContext } from "../contexts/CartContext";
 
 const Header = () => {
   const [showCart, setShowCart] = useState<boolean>(false);
   const BASE_URL = "http://localhost:3000";
   const { user, setUser } = useContext(UserContext);
+  const { cartItems } = useContext(CartContext);
   const location = useLocation();
 
   const authUser = async () => {
@@ -92,7 +94,7 @@ const Header = () => {
             <div className="relative cursor-pointer">
               <ShoppingCart size={18} onClick={() => setShowCart(!showCart)} />
               <p className="absolute -top-4 -right-4 flex h-5 w-5 items-center justify-center rounded-full bg-[#F2DAAC] text-[#161410]">
-                1
+                {cartItems.length}
               </p>
             </div>
             <div className="flex items-center gap-2">

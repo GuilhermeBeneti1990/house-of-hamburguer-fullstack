@@ -3,6 +3,7 @@ import { Router } from "express";
 import { auth, login, logout, register } from "./controller/userController";
 import { authMiddleware } from "./middlewares/auth";
 import { deleteProduct, getProducts } from "./controller/productController";
+import { getCartItems } from "./controller/cartController";
 
 export const router = Router();
 
@@ -22,3 +23,6 @@ router.post("/logout", authMiddleware, logout);
 // Product Routes
 router.get("/products", getProducts);
 router.delete("/products/:id", authMiddleware, deleteProduct);
+
+// Cart
+router.get("/cart", authMiddleware, getCartItems);

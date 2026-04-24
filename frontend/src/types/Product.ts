@@ -5,5 +5,5 @@ export interface IProduct {
   price: number;
   img: string;
   category: string;
-  setProducts: React.Dispatch<React.SetStateAction<IProduct[]>>;
+  setProducts?: React.Dispatch<React.SetStateAction<IProduct[]>>;
 }
